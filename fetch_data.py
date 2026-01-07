@@ -43,7 +43,13 @@ def download_file(url, output_path):
     Downloads a file from the specified URL to the given output path.
     """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with requests.get(url, stream=True) as r:
+    
+    # Configure headers and allow redirects for better compatibility with Figshare and similar services
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    }
+    
+    with requests.get(url, stream=True, headers=headers, allow_redirects=True) as r:
         r.raise_for_status()
         total = int(r.headers.get('content-length', 0))
         # download with progress bar

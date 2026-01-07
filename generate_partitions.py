@@ -20,7 +20,7 @@ Usage:
 
 Optional arguments:
     --dataset DATASET    Process only a specific dataset (diesel, corn, melamine, eggs, 
-                        soil_nir, soil_mir, mango, cgl, shootout, wheat, raman)
+                        soil_nir, soil_mir, mango, cgl, shootout, wheat)
     --verbose           Show detailed processing information
 """
 
@@ -726,11 +726,16 @@ def process_wheat(verbose=False):
     # Load original data
     filename = DATA_ORIG / 'wheat_kernel.xlsx'
     
-    calX = pd.read_excel(filename, sheet_name='calibration_X', header=None)
-    calY = pd.read_excel(filename, sheet_name='calibration_Y', header=None)
+    if not filename.exists() or filename.stat().st_size == 0:
+        print(f"⚠ Warning: {filename} not found or empty")
+        print("  Skipping Wheat dataset")
+        return
+    
+    calX = pd.read_excel(filename, sheet_name='calibration_X', header=None, engine='openpyxl')
+    calY = pd.read_excel(filename, sheet_name='calibration_Y', header=None, engine='openpyxl')
     calY.rename(columns={0: 'y'}, inplace=True)
-    testX = pd.read_excel(filename, sheet_name='test_X', header=None)
-    testY = pd.read_excel(filename, sheet_name='test_Y', header=None)
+    testX = pd.read_excel(filename, sheet_name='test_X', header=None, engine='openpyxl')
+    testY = pd.read_excel(filename, sheet_name='test_Y', header=None, engine='openpyxl')
     testY.rename(columns={0: 'y'}, inplace=True)
     
     if verbose:
@@ -755,87 +760,6 @@ def process_wheat(verbose=False):
     print(f"✓ Wheat: 1 task processed")
 
 
-def process_raman(verbose=False):
-    """Processes the Raman dataset."""
-    print("\n" + "="*80)
-    print("PROCESSING DATASET: RAMAN")
-    print("="*80)
-    
-    def load_and_preprocess_data(filepath, is_train=True):
-        """Loads and preprocesses Raman data."""
-        if is_train:
-            df = pd.read_csv(filepath)
-            target_cols = ['Glucose (g/L)', 'Sodium Acetate (g/L)', 'Magnesium Acetate (g/L)']
-            y = df[target_cols].dropna().values
-            X = df.iloc[:, :-4]
-        else:
-            df = pd.read_csv(filepath, header=None)
-            X = df
-            y = None
-        
-        X.columns = ["sample_id"] + [str(i) for i in range(X.shape[1]-1)]
-        X['sample_id'] = X['sample_id'].ffill()
-        
-        if is_train:
-            X['sample_id'] = X['sample_id'].str.strip()
-        else:
-            X['sample_id'] = X['sample_id'].str.strip().str.replace('sample', '').astype(int)
-        
-        spectral_cols = X.columns[1:]
-        for col in spectral_cols:
-            X[col] = X[col].astype(str).str.replace('[', '', regex=False).str.replace(']', '', regex=False)
-            X[col] = pd.to_numeric(X[col], errors='coerce')
-        
-        return X, y
-    
-    # Load data
-    path = 'data/Raman/transfer_plate.csv'
-    X_train, y_train = load_and_preprocess_data(path)
-    
-    target_cols = ['Glucose (g/L)', 'Sodium Acetate (g/L)', 'Magnesium Acetate (g/L)']
-    y_train = pd.DataFrame(y_train, columns=target_cols)
-    y_train['sample_id'] = [f'sample{i+1}' for i in range(len(y_train))]
-    y_train = y_train.loc[y_train.index.repeat(2)].reset_index(drop=True)
-    
-    if verbose:
-        print(f"Data loaded: X={X_train.shape}, y={y_train.shape}")
-    
-    # Split train/test
-    from sklearn.model_selection import train_test_split
-    index_train, index_test = train_test_split(X_train.sample_id.unique(), test_size=0.15, random_state=42)
-    
-    # Process each analyte
-    tasks_created = 0
-    for col in target_cols:
-        task = f'Bio_{col.replace(" (g/L)", "").split(" ")[0]}'
-        
-        if verbose:
-            print(f"\n  Processing: {task}")
-        
-        # Extract support/query
-        y_supp = y_train.query("sample_id in @index_train")[col].rename('y')
-        X_supp = X_train.query("sample_id in @index_train").drop(columns=['sample_id'])
-        y_query = y_train.query("sample_id in @index_test")[col].rename('y')
-        X_query = X_train.query("sample_id in @index_test").drop(columns=['sample_id'])
-        
-        # Save
-        output_path = OUTPUT_MIXED / task
-        output_path.mkdir(parents=True, exist_ok=True)
-        
-        X_supp.to_csv(output_path / 'X_supp.csv', index=True)
-        y_supp.to_csv(output_path / 'y_supp.csv', index=True)
-        X_query.to_csv(output_path / 'X_query.csv', index=True)
-        y_query.to_csv(output_path / 'y_query.csv', index=True)
-        
-        if verbose:
-            print(f"    X_supp: {X_supp.shape}, X_query: {X_query.shape}")
-            print(f"    y_supp: {y_supp.shape}, y_query: {y_query.shape}")
-        
-        tasks_created += 1
-    
-    print(f"✓ Raman: {tasks_created} tasks processed")
-
-
 # ============================================================================
 # MAIN FUNCTION
 # ============================================================================
@@ -850,7 +774,7 @@ def main():
         '--dataset',
         type=str,
         choices=['diesel', 'corn', 'melamine', 'eggs', 'soil_nir', 'soil_mir', 
-                'mango', 'cgl', 'shootout', 'wheat', 'raman', 'all'],
+                'mango', 'cgl', 'shootout', 'wheat', 'all'],
         default='all',
         help='Dataset to process (default: all)'
     )
@@ -913,9 +837,6 @@ def main():
         
         if args.dataset == 'all' or args.dataset == 'wheat':
             process_wheat(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'raman':
-            process_raman(args.verbose)
         
     except Exception as e:
         print(f"\n✗ ERROR: {e}")
