@@ -1,0 +1,8 @@
+,task,split
+0,Mango_2015,train
+1,Mango_2016,train
+2,Mango_2017,train
+3,Mango_2015,val
+4,Mango_2016,val
+5,Mango_2017,val
+6,Mango_2018,test

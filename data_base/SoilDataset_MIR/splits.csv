@@ -1,0 +1,705 @@
+,task,split
+0,Soil_Colorado-CaCO3,val
+1,Soil_Montana-CaCO3,val
+2,Soil_Tennessee-CaCO3,train
+3,Soil_Oregon-CaCO3,train
+4,Soil_Louisiana-CaCO3,train
+5,Soil_District of Columbia-CaCO3,train
+6,Soil_Nevada-CaCO3,val
+7,Soil_South Dakota-CaCO3,test
+8,Soil_Puerto Rico-CaCO3,val
+9,Soil_Virginia-CaCO3,train
+10,Soil_New Jersey-CaCO3,train
+11,Soil_Vermont-CaCO3,test
+12,Soil_Iowa-CaCO3,test
+13,Soil_Wisconsin-CaCO3,test
+14,Soil_New Hampshire-CaCO3,test
+15,Soil_South Carolina-CaCO3,train
+16,Soil_Kentucky-CaCO3,train
+17,Soil_California-CaCO3,train
+18,Soil_North Dakota-CaCO3,test
+19,Soil_Kansas-CaCO3,train
+20,Soil_North Carolina-CaCO3,train
+21,Soil_New Mexico-CaCO3,val
+22,Soil_New York-CaCO3,train
+23,Soil_CA-CaCO3,train
+24,Soil_Georgia-CaCO3,train
+25,Soil_Maine-CaCO3,test
+26,Soil_Illinois-CaCO3,test
+27,Soil_Mississippi-CaCO3,train
+28,Soil_Pennsylvania-CaCO3,train
+29,Soil_Ohio-CaCO3,test
+30,Soil_United States Virgin Islands-CaCO3,train
+31,Soil_Florida-CaCO3,train
+32,Soil_Massachusetts-CaCO3,train
+33,Soil_Arkansas-CaCO3,train
+34,Soil_Alabama-CaCO3,train
+35,Soil_Missouri-CaCO3,train
+36,Soil_Alaska-CaCO3,test
+37,Soil_Indiana-CaCO3,train
+38,Soil_Idaho-CaCO3,train
+39,Soil_Minnesota-CaCO3,test
+40,Soil_West Virginia-CaCO3,train
+41,Soil_Hawaii-CaCO3,train
+42,Soil_Maryland-CaCO3,train
+43,Soil_Washington-CaCO3,train
+44,Soil_Texas-CaCO3,train
+45,Soil_Michigan-CaCO3,test
+46,Soil_Utah-CaCO3,val
+47,Soil_Wyoming-CaCO3,test
+48,Soil_Arizona-CaCO3,val
+49,Soil_Oklahoma-CaCO3,train
+50,Soil_Nebraska-CaCO3,test
+51,Soil_Louisiana-C,train
+52,Soil_Idaho-C,train
+53,Soil_Pennsylvania-C,train
+54,Soil_Vermont-C,test
+55,Soil_Georgia-C,train
+56,Soil_Wisconsin-C,test
+57,Soil_Delaware-C,train
+58,Soil_Hawaii-C,train
+59,Soil_Iowa-C,test
+60,Soil_Arizona-C,val
+61,Soil_Texas-C,train
+62,Soil_California-C,train
+63,Soil_Oregon-C,train
+64,Soil_Colorado-C,val
+65,Soil_Utah-C,val
+66,Soil_Wyoming-C,test
+67,Soil_Kentucky-C,train
+68,Soil_Oklahoma-C,train
+69,Soil_Nevada-C,val
+70,Soil_New Mexico-C,val
+71,Soil_CA-C,train
+72,Soil_Illinois-C,test
+73,Soil_Ohio-C,test
+74,Soil_Tennessee-C,train
+75,Soil_New York-C,train
+76,Soil_Washington-C,train
+77,Soil_United States Virgin Islands-C,train
+78,Soil_Connecticut-C,train
+79,Soil_Massachusetts-C,train
+80,Soil_West Virginia-C,train
+81,Soil_Minnesota-C,test
+82,Soil_Maine-C,test
+83,Soil_New Jersey-C,train
+84,Soil_Montana-C,val
+85,Soil_Indiana-C,train
+86,Soil_Arkansas-C,train
+87,Soil_South Carolina-C,train
+88,Soil_Nebraska-C,test
+89,Soil_Maryland-C,train
+90,Soil_Virginia-C,train
+91,Soil_Alabama-C,train
+92,Soil_Rhode Island-C,train
+93,Soil_Alaska-C,test
+94,Soil_Florida-C,train
+95,Soil_District of Columbia-C,train
+96,Soil_South Dakota-C,test
+97,Soil_Missouri-C,train
+98,Soil_North Dakota-C,test
+99,Soil_North Carolina-C,train
+100,Soil_Michigan-C,test
+101,Soil_Kansas-C,train
+102,Soil_Puerto Rico-C,val
+103,Soil_Mississippi-C,train
+104,Soil_New Hampshire-C,test
+105,Soil_OR-C,train
+106,Soil_Hawaii-OC,train
+107,Soil_California-OC,train
+108,Soil_Oregon-OC,train
+109,Soil_Idaho-OC,train
+110,Soil_North Carolina-OC,train
+111,Soil_Nebraska-OC,test
+112,Soil_North Dakota-OC,test
+113,Soil_Washington-OC,train
+114,Soil_Oklahoma-OC,train
+115,Soil_South Dakota-OC,test
+116,Soil_Ohio-OC,test
+117,Soil_Alabama-OC,train
+118,Soil_Connecticut-OC,train
+119,Soil_Illinois-OC,test
+120,Soil_Louisiana-OC,train
+121,Soil_Texas-OC,train
+122,Soil_District of Columbia-OC,train
+123,Soil_Nevada-OC,val
+124,Soil_New Jersey-OC,train
+125,Soil_Massachusetts-OC,train
+126,Soil_Colorado-OC,val
+127,Soil_Kansas-OC,train
+128,Soil_Wyoming-OC,test
+129,Soil_New York-OC,train
+130,Soil_Virginia-OC,train
+131,Soil_Georgia-OC,train
+132,Soil_Pennsylvania-OC,train
+133,Soil_Florida-OC,train
+134,Soil_Maryland-OC,train
+135,Soil_South Carolina-OC,train
+136,Soil_Puerto Rico-OC,val
+137,Soil_Delaware-OC,train
+138,Soil_Mississippi-OC,train
+139,Soil_New Hampshire-OC,test
+140,Soil_Arizona-OC,val
+141,Soil_Vermont-OC,test
+142,Soil_Michigan-OC,test
+143,Soil_Montana-OC,val
+144,Soil_New Mexico-OC,val
+145,Soil_Missouri-OC,train
+146,Soil_Indiana-OC,train
+147,Soil_Iowa-OC,test
+148,Soil_Kentucky-OC,train
+149,Soil_Alaska-OC,test
+150,Soil_Wisconsin-OC,test
+151,Soil_Arkansas-OC,train
+152,Soil_CA-OC,train
+153,Soil_Rhode Island-OC,train
+154,Soil_OR-OC,train
+155,Soil_Tennessee-OC,train
+156,Soil_Minnesota-OC,test
+157,Soil_United States Virgin Islands-OC,train
+158,Soil_West Virginia-OC,train
+159,Soil_Maine-OC,test
+160,Soil_Utah-OC,val
+161,Soil_Hawaii-CEC,train
+162,Soil_Colorado-CEC,val
+163,Soil_Indiana-CEC,train
+164,Soil_West Virginia-CEC,train
+165,Soil_Missouri-CEC,train
+166,Soil_Utah-CEC,val
+167,Soil_Washington-CEC,train
+168,Soil_Ohio-CEC,test
+169,Soil_New Jersey-CEC,train
+170,Soil_CA-CEC,train
+171,Soil_New Mexico-CEC,val
+172,Soil_California-CEC,train
+173,Soil_Montana-CEC,val
+174,Soil_Louisiana-CEC,train
+175,Soil_Tennessee-CEC,train
+176,Soil_Wyoming-CEC,test
+177,Soil_Georgia-CEC,train
+178,Soil_Nebraska-CEC,test
+179,Soil_North Carolina-CEC,train
+180,Soil_United States Virgin Islands-CEC,train
+181,Soil_Nevada-CEC,val
+182,Soil_Kansas-CEC,train
+183,Soil_Alaska-CEC,test
+184,Soil_Arizona-CEC,val
+185,Soil_South Dakota-CEC,test
+186,Soil_Florida-CEC,train
+187,Soil_Arkansas-CEC,train
+188,Soil_New York-CEC,train
+189,Soil_South Carolina-CEC,train
+190,Soil_Connecticut-CEC,train
+191,Soil_Mississippi-CEC,train
+192,Soil_Virginia-CEC,train
+193,Soil_Iowa-CEC,test
+194,Soil_Michigan-CEC,test
+195,Soil_North Dakota-CEC,test
+196,Soil_Maine-CEC,test
+197,Soil_Massachusetts-CEC,train
+198,Soil_Texas-CEC,train
+199,Soil_New Hampshire-CEC,test
+200,Soil_Vermont-CEC,test
+201,Soil_Oklahoma-CEC,train
+202,Soil_Pennsylvania-CEC,train
+203,Soil_Maryland-CEC,train
+204,Soil_Wisconsin-CEC,test
+205,Soil_Delaware-CEC,train
+206,Soil_Illinois-CEC,test
+207,Soil_Alabama-CEC,train
+208,Soil_District of Columbia-CEC,train
+209,Soil_Rhode Island-CEC,train
+210,Soil_Idaho-CEC,train
+211,Soil_Kentucky-CEC,train
+212,Soil_Minnesota-CEC,test
+213,Soil_Oregon-CEC,train
+214,Soil_Puerto Rico-CEC,val
+215,Soil_Nebraska-N,test
+216,Soil_Tennessee-N,train
+217,Soil_Illinois-N,test
+218,Soil_South Carolina-N,train
+219,Soil_District of Columbia-N,train
+220,Soil_Nevada-N,val
+221,Soil_Mississippi-N,train
+222,Soil_Massachusetts-N,train
+223,Soil_CA-N,train
+224,Soil_Michigan-N,test
+225,Soil_Hawaii-N,train
+226,Soil_California-N,train
+227,Soil_Wyoming-N,test
+228,Soil_Pennsylvania-N,train
+229,Soil_New Hampshire-N,test
+230,Soil_Alaska-N,test
+231,Soil_Ohio-N,test
+232,Soil_Iowa-N,test
+233,Soil_Virginia-N,train
+234,Soil_Colorado-N,val
+235,Soil_North Dakota-N,test
+236,Soil_Kentucky-N,train
+237,Soil_Arizona-N,val
+238,Soil_Georgia-N,train
+239,Soil_Delaware-N,train
+240,Soil_Wisconsin-N,test
+241,Soil_West Virginia-N,train
+242,Soil_Maryland-N,train
+243,Soil_Vermont-N,test
+244,Soil_Minnesota-N,test
+245,Soil_Arkansas-N,train
+246,Soil_Washington-N,train
+247,Soil_Connecticut-N,train
+248,Soil_New Mexico-N,val
+249,Soil_South Dakota-N,test
+250,Soil_North Carolina-N,train
+251,Soil_New York-N,train
+252,Soil_Idaho-N,train
+253,Soil_Montana-N,val
+254,Soil_New Jersey-N,train
+255,Soil_Missouri-N,train
+256,Soil_OR-N,train
+257,Soil_Puerto Rico-N,val
+258,Soil_Maine-N,test
+259,Soil_Florida-N,train
+260,Soil_Louisiana-N,train
+261,Soil_Indiana-N,train
+262,Soil_Oregon-N,train
+263,Soil_Utah-N,val
+264,Soil_Kansas-N,train
+265,Soil_Alabama-N,train
+266,Soil_Texas-N,train
+267,Soil_United States Virgin Islands-N,train
+268,Soil_Oklahoma-N,train
+269,Soil_Rhode Island-N,train
+270,Soil_Michigan-Clay,test
+271,Soil_Colorado-Clay,val
+272,Soil_Oregon-Clay,train
+273,Soil_New Jersey-Clay,train
+274,Soil_CA-Clay,train
+275,Soil_New Hampshire-Clay,test
+276,Soil_Kansas-Clay,train
+277,Soil_Nevada-Clay,val
+278,Soil_Idaho-Clay,train
+279,Soil_Arizona-Clay,val
+280,Soil_Virginia-Clay,train
+281,Soil_Alabama-Clay,train
+282,Soil_Wisconsin-Clay,test
+283,Soil_Massachusetts-Clay,train
+284,Soil_OR-Clay,train
+285,Soil_North Dakota-Clay,test
+286,Soil_Tennessee-Clay,train
+287,Soil_South Carolina-Clay,train
+288,Soil_Maryland-Clay,train
+289,Soil_Minnesota-Clay,test
+290,Soil_Washington-Clay,train
+291,Soil_Oklahoma-Clay,train
+292,Soil_Ohio-Clay,test
+293,Soil_Missouri-Clay,train
+294,Soil_Delaware-Clay,train
+295,Soil_Mississippi-Clay,train
+296,Soil_Rhode Island-Clay,train
+297,Soil_New York-Clay,train
+298,Soil_Montana-Clay,val
+299,Soil_Louisiana-Clay,train
+300,Soil_North Carolina-Clay,train
+301,Soil_Maine-Clay,test
+302,Soil_South Dakota-Clay,test
+303,Soil_Puerto Rico-Clay,val
+304,Soil_Vermont-Clay,test
+305,Soil_Utah-Clay,val
+306,Soil_New Mexico-Clay,val
+307,Soil_Pennsylvania-Clay,train
+308,Soil_Iowa-Clay,test
+309,Soil_Kentucky-Clay,train
+310,Soil_Illinois-Clay,test
+311,Soil_California-Clay,train
+312,Soil_West Virginia-Clay,train
+313,Soil_Nebraska-Clay,test
+314,Soil_Wyoming-Clay,test
+315,Soil_Alaska-Clay,test
+316,Soil_Arkansas-Clay,train
+317,Soil_Georgia-Clay,train
+318,Soil_Indiana-Clay,train
+319,Soil_Hawaii-Clay,train
+320,Soil_Connecticut-Clay,train
+321,Soil_Florida-Clay,train
+322,Soil_Texas-Clay,train
+323,Soil_District of Columbia-Clay,train
+324,Soil_Michigan-Acidity,test
+325,Soil_Florida-Acidity,train
+326,Soil_Indiana-Acidity,train
+327,Soil_Texas-Acidity,train
+328,Soil_New York-Acidity,train
+329,Soil_Ohio-Acidity,test
+330,Soil_Iowa-Acidity,test
+331,Soil_Kansas-Acidity,train
+332,Soil_North Carolina-Acidity,train
+333,Soil_Pennsylvania-Acidity,train
+334,Soil_Idaho-Acidity,train
+335,Soil_Georgia-Acidity,train
+336,Soil_Oklahoma-Acidity,train
+337,Soil_Oregon-Acidity,train
+338,Soil_Montana-Acidity,val
+339,Soil_West Virginia-Acidity,train
+340,Soil_Minnesota-Acidity,test
+341,Soil_Connecticut-Acidity,train
+342,Soil_New Jersey-Acidity,train
+343,Soil_Tennessee-Acidity,train
+344,Soil_Mississippi-Acidity,train
+345,Soil_Nebraska-Acidity,test
+346,Soil_Missouri-Acidity,train
+347,Soil_Louisiana-Acidity,train
+348,Soil_Vermont-Acidity,test
+349,Soil_North Dakota-Acidity,test
+350,Soil_Puerto Rico-Acidity,val
+351,Soil_New Mexico-Acidity,val
+352,Soil_Massachusetts-Acidity,train
+353,Soil_California-Acidity,train
+354,Soil_South Dakota-Acidity,test
+355,Soil_Maryland-Acidity,train
+356,Soil_Wisconsin-Acidity,test
+357,Soil_Kentucky-Acidity,train
+358,Soil_District of Columbia-Acidity,train
+359,Soil_Delaware-Acidity,train
+360,Soil_Wyoming-Acidity,test
+361,Soil_Maine-Acidity,test
+362,Soil_Alabama-Acidity,train
+363,Soil_Arkansas-Acidity,train
+364,Soil_Nevada-Acidity,val
+365,Soil_South Carolina-Acidity,train
+366,Soil_Utah-Acidity,val
+367,Soil_Rhode Island-Acidity,train
+368,Soil_United States Virgin Islands-Acidity,train
+369,Soil_CA-Acidity,train
+370,Soil_Washington-Acidity,train
+371,Soil_New Hampshire-Acidity,test
+372,Soil_Arizona-Acidity,val
+373,Soil_Alaska-Acidity,test
+374,Soil_Illinois-Acidity,test
+375,Soil_Colorado-Acidity,val
+376,Soil_Virginia-Acidity,train
+377,Soil_Hawaii-Acidity,train
+378,Soil_Hawaii-Sand,train
+379,Soil_California-Sand,train
+380,Soil_Montana-Sand,val
+381,Soil_Kentucky-Sand,train
+382,Soil_Illinois-Sand,test
+383,Soil_Oregon-Sand,train
+384,Soil_Texas-Sand,train
+385,Soil_Maryland-Sand,train
+386,Soil_District of Columbia-Sand,train
+387,Soil_Maine-Sand,test
+388,Soil_Arkansas-Sand,train
+389,Soil_Alaska-Sand,test
+390,Soil_New Mexico-Sand,val
+391,Soil_Wyoming-Sand,test
+392,Soil_Vermont-Sand,test
+393,Soil_Arizona-Sand,val
+394,Soil_Virginia-Sand,train
+395,Soil_Alabama-Sand,train
+396,Soil_Wisconsin-Sand,test
+397,Soil_United States Virgin Islands-Sand,train
+398,Soil_CA-Sand,train
+399,Soil_OR-Sand,train
+400,Soil_Kansas-Sand,train
+401,Soil_Minnesota-Sand,test
+402,Soil_Delaware-Sand,train
+403,Soil_North Dakota-Sand,test
+404,Soil_Washington-Sand,train
+405,Soil_Pennsylvania-Sand,train
+406,Soil_West Virginia-Sand,train
+407,Soil_New Jersey-Sand,train
+408,Soil_Georgia-Sand,train
+409,Soil_Massachusetts-Sand,train
+410,Soil_Connecticut-Sand,train
+411,Soil_Nebraska-Sand,test
+412,Soil_Florida-Sand,train
+413,Soil_Nevada-Sand,val
+414,Soil_New York-Sand,train
+415,Soil_Puerto Rico-Sand,val
+416,Soil_Michigan-Sand,test
+417,Soil_Louisiana-Sand,train
+418,Soil_Oklahoma-Sand,train
+419,Soil_New Hampshire-Sand,test
+420,Soil_South Carolina-Sand,train
+421,Soil_Idaho-Sand,train
+422,Soil_South Dakota-Sand,test
+423,Soil_Ohio-Sand,test
+424,Soil_Rhode Island-Sand,train
+425,Soil_North Carolina-Sand,train
+426,Soil_Colorado-Sand,val
+427,Soil_Tennessee-Sand,train
+428,Soil_Utah-Sand,val
+429,Soil_Indiana-Sand,train
+430,Soil_Iowa-Sand,test
+431,Soil_Missouri-Sand,train
+432,Soil_Mississippi-Sand,train
+433,Soil_North Dakota-Ca,test
+434,Soil_Indiana-Ca,train
+435,Soil_Texas-Ca,train
+436,Soil_Maryland-Ca,train
+437,Soil_Pennsylvania-Ca,train
+438,Soil_Puerto Rico-Ca,val
+439,Soil_New Hampshire-Ca,test
+440,Soil_North Carolina-Ca,train
+441,Soil_Illinois-Ca,test
+442,Soil_Tennessee-Ca,train
+443,Soil_Michigan-Ca,test
+444,Soil_Kentucky-Ca,train
+445,Soil_Ohio-Ca,test
+446,Soil_Arkansas-Ca,train
+447,Soil_Connecticut-Ca,train
+448,Soil_Maine-Ca,test
+449,Soil_Wisconsin-Ca,test
+450,Soil_Minnesota-Ca,test
+451,Soil_New York-Ca,train
+452,Soil_Montana-Ca,val
+453,Soil_Oklahoma-Ca,train
+454,Soil_New Jersey-Ca,train
+455,Soil_New Mexico-Ca,val
+456,Soil_Nebraska-Ca,test
+457,Soil_Delaware-Ca,train
+458,Soil_Utah-Ca,val
+459,Soil_Massachusetts-Ca,train
+460,Soil_Kansas-Ca,train
+461,Soil_Iowa-Ca,test
+462,Soil_Rhode Island-Ca,train
+463,Soil_South Dakota-Ca,test
+464,Soil_Alaska-Ca,test
+465,Soil_California-Ca,train
+466,Soil_Missouri-Ca,train
+467,Soil_Louisiana-Ca,train
+468,Soil_South Carolina-Ca,train
+469,Soil_Idaho-Ca,train
+470,Soil_Colorado-Ca,val
+471,Soil_Vermont-Ca,test
+472,Soil_CA-Ca,train
+473,Soil_Hawaii-Ca,train
+474,Soil_Wyoming-Ca,test
+475,Soil_Virginia-Ca,train
+476,Soil_District of Columbia-Ca,train
+477,Soil_Georgia-Ca,train
+478,Soil_Nevada-Ca,val
+479,Soil_Mississippi-Ca,train
+480,Soil_Florida-Ca,train
+481,Soil_Washington-Ca,train
+482,Soil_Alabama-Ca,train
+483,Soil_Arizona-Ca,val
+484,Soil_West Virginia-Ca,train
+485,Soil_Oregon-Ca,train
+486,Soil_California-Mg,train
+487,Soil_Tennessee-Mg,train
+488,Soil_Louisiana-Mg,train
+489,Soil_Oklahoma-Mg,train
+490,Soil_Iowa-Mg,test
+491,Soil_United States Virgin Islands-Mg,train
+492,Soil_CA-Mg,train
+493,Soil_Florida-Mg,train
+494,Soil_North Dakota-Mg,test
+495,Soil_Utah-Mg,val
+496,Soil_South Carolina-Mg,train
+497,Soil_District of Columbia-Mg,train
+498,Soil_Ohio-Mg,test
+499,Soil_Missouri-Mg,train
+500,Soil_Alabama-Mg,train
+501,Soil_Minnesota-Mg,test
+502,Soil_Nevada-Mg,val
+503,Soil_Idaho-Mg,train
+504,Soil_New Jersey-Mg,train
+505,Soil_Massachusetts-Mg,train
+506,Soil_Connecticut-Mg,train
+507,Soil_Rhode Island-Mg,train
+508,Soil_Michigan-Mg,test
+509,Soil_Alaska-Mg,test
+510,Soil_South Dakota-Mg,test
+511,Soil_Pennsylvania-Mg,train
+512,Soil_Mississippi-Mg,train
+513,Soil_Arkansas-Mg,train
+514,Soil_Montana-Mg,val
+515,Soil_Vermont-Mg,test
+516,Soil_Texas-Mg,train
+517,Soil_Puerto Rico-Mg,val
+518,Soil_New Mexico-Mg,val
+519,Soil_West Virginia-Mg,train
+520,Soil_Kentucky-Mg,train
+521,Soil_Wyoming-Mg,test
+522,Soil_North Carolina-Mg,train
+523,Soil_Delaware-Mg,train
+524,Soil_Maryland-Mg,train
+525,Soil_Hawaii-Mg,train
+526,Soil_Illinois-Mg,test
+527,Soil_Oregon-Mg,train
+528,Soil_Arizona-Mg,val
+529,Soil_Indiana-Mg,train
+530,Soil_Georgia-Mg,train
+531,Soil_Washington-Mg,train
+532,Soil_Maine-Mg,test
+533,Soil_Colorado-Mg,val
+534,Soil_Wisconsin-Mg,test
+535,Soil_Nebraska-Mg,test
+536,Soil_New Hampshire-Mg,test
+537,Soil_New York-Mg,train
+538,Soil_Virginia-Mg,train
+539,Soil_Kansas-Mg,train
+540,Soil_Kentucky-Silt,train
+541,Soil_Indiana-Silt,train
+542,Soil_Oklahoma-Silt,train
+543,Soil_Wyoming-Silt,test
+544,Soil_New Jersey-Silt,train
+545,Soil_Wisconsin-Silt,test
+546,Soil_Mississippi-Silt,train
+547,Soil_CA-Silt,train
+548,Soil_North Carolina-Silt,train
+549,Soil_California-Silt,train
+550,Soil_Florida-Silt,train
+551,Soil_Illinois-Silt,test
+552,Soil_Louisiana-Silt,train
+553,Soil_Maine-Silt,test
+554,Soil_Arkansas-Silt,train
+555,Soil_Puerto Rico-Silt,val
+556,Soil_Alabama-Silt,train
+557,Soil_New Hampshire-Silt,test
+558,Soil_Montana-Silt,val
+559,Soil_Oregon-Silt,train
+560,Soil_South Dakota-Silt,test
+561,Soil_Pennsylvania-Silt,train
+562,Soil_Iowa-Silt,test
+563,Soil_OR-Silt,train
+564,Soil_Hawaii-Silt,train
+565,Soil_Nebraska-Silt,test
+566,Soil_Colorado-Silt,val
+567,Soil_Kansas-Silt,train
+568,Soil_Tennessee-Silt,train
+569,Soil_Utah-Silt,val
+570,Soil_South Carolina-Silt,train
+571,Soil_Georgia-Silt,train
+572,Soil_Delaware-Silt,train
+573,Soil_Connecticut-Silt,train
+574,Soil_North Dakota-Silt,test
+575,Soil_Texas-Silt,train
+576,Soil_Maryland-Silt,train
+577,Soil_Nevada-Silt,val
+578,Soil_New York-Silt,train
+579,Soil_United States Virgin Islands-Silt,train
+580,Soil_Michigan-Silt,test
+581,Soil_Alaska-Silt,test
+582,Soil_New Mexico-Silt,val
+583,Soil_Idaho-Silt,train
+584,Soil_Ohio-Silt,test
+585,Soil_Vermont-Silt,test
+586,Soil_Arizona-Silt,val
+587,Soil_West Virginia-Silt,train
+588,Soil_Virginia-Silt,train
+589,Soil_Rhode Island-Silt,train
+590,Soil_District of Columbia-Silt,train
+591,Soil_Minnesota-Silt,test
+592,Soil_Washington-Silt,train
+593,Soil_Missouri-Silt,train
+594,Soil_Massachusetts-Silt,train
+595,Soil_Utah-K,val
+596,Soil_Oregon-K,train
+597,Soil_District of Columbia-K,train
+598,Soil_Washington-K,train
+599,Soil_Puerto Rico-K,val
+600,Soil_West Virginia-K,train
+601,Soil_Virginia-K,train
+602,Soil_Missouri-K,train
+603,Soil_North Carolina-K,train
+604,Soil_Kansas-K,train
+605,Soil_Minnesota-K,test
+606,Soil_New York-K,train
+607,Soil_New Jersey-K,train
+608,Soil_Mississippi-K,train
+609,Soil_Alaska-K,test
+610,Soil_Tennessee-K,train
+611,Soil_North Dakota-K,test
+612,Soil_Illinois-K,test
+613,Soil_Texas-K,train
+614,Soil_South Dakota-K,test
+615,Soil_Ohio-K,test
+616,Soil_Georgia-K,train
+617,Soil_Idaho-K,train
+618,Soil_Vermont-K,test
+619,Soil_South Carolina-K,train
+620,Soil_Hawaii-K,train
+621,Soil_Massachusetts-K,train
+622,Soil_Kentucky-K,train
+623,Soil_Nebraska-K,test
+624,Soil_Delaware-K,train
+625,Soil_Oklahoma-K,train
+626,Soil_Arkansas-K,train
+627,Soil_Wisconsin-K,test
+628,Soil_United States Virgin Islands-K,train
+629,Soil_Alabama-K,train
+630,Soil_Connecticut-K,train
+631,Soil_Nevada-K,val
+632,Soil_Louisiana-K,train
+633,Soil_Michigan-K,test
+634,Soil_Arizona-K,val
+635,Soil_Rhode Island-K,train
+636,Soil_Maine-K,test
+637,Soil_Maryland-K,train
+638,Soil_CA-K,train
+639,Soil_Florida-K,train
+640,Soil_Indiana-K,train
+641,Soil_Iowa-K,test
+642,Soil_Colorado-K,val
+643,Soil_Wyoming-K,test
+644,Soil_Pennsylvania-K,train
+645,Soil_New Hampshire-K,test
+646,Soil_New Mexico-K,val
+647,Soil_California-K,train
+648,Soil_Montana-K,val
+649,Soil_North Carolina-pH,train
+650,Soil_Utah-pH,val
+651,Soil_Wyoming-pH,test
+652,Soil_South Dakota-pH,test
+653,Soil_Arkansas-pH,train
+654,Soil_Rhode Island-pH,train
+655,Soil_Alaska-pH,test
+656,Soil_Florida-pH,train
+657,Soil_Tennessee-pH,train
+658,Soil_Maryland-pH,train
+659,Soil_Washington-pH,train
+660,Soil_New York-pH,train
+661,Soil_Georgia-pH,train
+662,Soil_Alabama-pH,train
+663,Soil_Wisconsin-pH,test
+664,Soil_United States Virgin Islands-pH,train
+665,Soil_Massachusetts-pH,train
+666,Soil_OR-pH,train
+667,Soil_Kansas-pH,train
+668,Soil_Kentucky-pH,train
+669,Soil_Louisiana-pH,train
+670,Soil_Vermont-pH,test
+671,Soil_Iowa-pH,test
+672,Soil_Connecticut-pH,train
+673,Soil_Hawaii-pH,train
+674,Soil_Indiana-pH,train
+675,Soil_Texas-pH,train
+676,Soil_Minnesota-pH,test
+677,Soil_CA-pH,train
+678,Soil_Oregon-pH,train
+679,Soil_Oklahoma-pH,train
+680,Soil_Idaho-pH,train
+681,Soil_Ohio-pH,test
+682,Soil_Puerto Rico-pH,val
+683,Soil_Virginia-pH,train
+684,Soil_Missouri-pH,train
+685,Soil_District of Columbia-pH,train
+686,Soil_Nevada-pH,val
+687,Soil_Pennsylvania-pH,train
+688,Soil_West Virginia-pH,train
+689,Soil_New Hampshire-pH,test
+690,Soil_Michigan-pH,test
+691,Soil_California-pH,train
+692,Soil_Nebraska-pH,test
+693,Soil_Montana-pH,val
+694,Soil_North Dakota-pH,test
+695,Soil_Illinois-pH,test
+696,Soil_New Mexico-pH,val
+697,Soil_Maine-pH,test
+698,Soil_Arizona-pH,val
+699,Soil_New Jersey-pH,train
+700,Soil_Mississippi-pH,train
+701,Soil_Colorado-pH,val
+702,Soil_Delaware-pH,train
+703,Soil_South Carolina-pH,train

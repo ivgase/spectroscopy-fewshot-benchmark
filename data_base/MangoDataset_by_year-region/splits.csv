@@ -1,0 +1,15 @@
+,task,split
+0,Mango_2015_NT,train
+1,Mango_2015_QLD,train
+2,Mango_2016_NT,train
+3,Mango_2016_QLD,train
+4,Mango_2017_NT,train
+5,Mango_2017_QLD,train
+6,Mango_2015_NT,val
+7,Mango_2015_QLD,val
+8,Mango_2016_NT,val
+9,Mango_2016_QLD,val
+10,Mango_2017_NT,val
+11,Mango_2017_QLD,val
+12,Mango_2018_NT,test
+13,Mango_2018_QLD,test

@@ -1,0 +1,15 @@
+{
+  "k.ext_usda.a725_cmolc.kg": "K",
+  "n.tot_iso.11261_w.pct": "N",
+  "p.ext_iso.11263_mg.kg": "P",
+  "ph.cacl2_iso.10390_index": "ph_CaCl2",
+  "ph.h2o_iso.10390_index": "pH_h2o",
+  "caco3_iso.10693_w.pct": "CaCO3",
+  "oc_iso.10694_w.pct": "OC",
+  "clay.tot_iso.11277_w.pct": "Clay",
+  "silt.tot_iso.11277_w.pct": "Silt",
+  "sand.tot_iso.11277_w.pct": "Sand",
+  "cf_iso.11464_w.pct": "CF",
+  "ec_iso.11265_ds.m": "EC",
+  "cec_iso.11260_cmolc.kg": "CEC"
+}

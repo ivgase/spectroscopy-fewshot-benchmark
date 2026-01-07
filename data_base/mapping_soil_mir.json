@@ -1,0 +1,18 @@
+{
+  "acidity_usda.a795_cmolc.kg": "Acidity",
+  "c.tot_usda.a622_w.pct": "C",
+  "ca.ext_usda.a722_cmolc.kg": "Ca",
+  "caco3_usda.a54_w.pct": "CaCO3",
+  "cec_usda.a723_cmolc.kg": "CEC",
+  "clay.tot_usda.a334_w.pct": "Clay",
+  "k.ext_usda.a725_cmolc.kg": "K",
+  "mg.ext_usda.a724_cmolc.kg": "Mg",
+  "n.tot_usda.a623_w.pct": "N",
+  "na.ext_usda.a726_cmolc.kg": "Na",
+  "oc_usda.c729_w.pct": "OC",
+  "p.ext_usda.a652_mg.kg": "P",
+  "ph.h2o_usda.a268_index": "pH",
+  "s.tot_usda.a624_w.pct": "S",
+  "sand.tot_usda.c60_w.pct": "Sand",
+  "silt.tot_usda.c62_w.pct": "Silt"
+}
