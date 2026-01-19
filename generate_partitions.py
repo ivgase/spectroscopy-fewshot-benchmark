@@ -838,6 +838,17 @@ def main():
         if args.dataset == 'all' or args.dataset == 'wheat':
             process_wheat(args.verbose)
         
+        # Copy main splits.csv for MixedDataset
+        # This file is at the root level of MixedDataset, not inside task subdirectories
+        if args.dataset == 'all' or args.dataset in ['diesel', 'corn', 'melamine', 'eggs', 'cgl', 'shootout', 'wheat']:
+            import shutil
+            mixed_splits = MIXED_DATASET_INDICES / 'splits.csv'
+            if mixed_splits.exists():
+                OUTPUT_MIXED.mkdir(parents=True, exist_ok=True)
+                shutil.copy(mixed_splits, OUTPUT_MIXED / 'splits.csv')
+                if args.verbose:
+                    print(f"\n✓ Copied main splits.csv to MixedDataset/")
+        
     except Exception as e:
         print(f"\n✗ ERROR: {e}")
         import traceback
