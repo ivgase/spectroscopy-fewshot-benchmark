@@ -68,3 +68,139 @@ python generate_partitions.py --dataset soil_mir --verbose
 Available datasets: `diesel`, `corn`, `melamine`, `eggs`, `soil_nir`, `soil_mir`, `mango`, `cgl`, `shootout`, `wheat`, `raman`.
 
 ---
+
+## Training Models
+
+This benchmark includes implementations of several few-shot learning methods. All models support the following datasets:
+
+| Dataset Name | Path | Description |
+|--------------|------|-------------|
+| `TRIP` | data/TRIP | Mixed spectroscopy benchmark (default) |
+| `Mango_y` | data/MangoDataset_by_year | Mango dataset split by year |
+| `Mango_yr` | data/MangoDataset_by_year-region | Mango dataset split by year-region |
+| `Soil_MIR` | data/SoilDataset_MIR | Soil MIR spectroscopy |
+| `Soil_NIR` | data/SoilDataset_NIR | Soil NIR spectroscopy |
+
+### MAML (Model-Agnostic Meta-Learning)
+
+```bash
+python train_maml.py \
+    --dataset TRIP \
+    --episodes 50000 \
+    --update_lr 0.1 \
+    --meta_lr 0.001 \
+    --update_step 5 \
+    --update_step_test 10 \
+    --k_spt 25 \
+    --k_qry 25 \
+    --second_order \
+    --output results/MAML
+```
+
+**Key parameters:**
+- `--update_lr`: Inner loop learning rate (task adaptation)
+- `--meta_lr`: Outer loop learning rate (meta-optimization)
+- `--update_step`: Inner loop steps during training
+- `--update_step_test`: Inner loop steps at test time
+- `--second_order`: Enable second-order gradients (full MAML)
+- `--savgol`: Apply Savitzky-Golay preprocessing
+
+### ProtoNet (Prototypical Networks)
+
+```bash
+python train_protonet.py \
+    --dataset TRIP \
+    --episodes 5000 \
+    --lr 0.005 \
+    --k_spt 25 \
+    --k_qry 25 \
+    --embedding after \
+    --output results/ProtoNet
+```
+
+**Key parameters:**
+- `--lr`: Learning rate for encoder training
+- `--embedding`: Embedding layer for prototype computation (`after` or `before`)
+- `--dist_temp`: Temperature for distance-based weighting
+
+### Fine-Tuning (FT)
+
+```bash
+python train_tf.py \
+    --dataset TRIP \
+    --epochs 500 \
+    --lr 0.09 \
+    --lr_adapt 0.09 \
+    --epochs_adapt 10 \
+    --k_spt 25 \
+    --k_qry 25 \
+    --output results/FT
+```
+
+**Key parameters:**
+- `--epochs`: Number of pretraining epochs
+- `--lr`: Learning rate for pretraining
+- `--lr_adapt`: Learning rate for test-time adaptation
+- `--epochs_adapt`: Number of adaptation epochs at test time
+
+### SNAIL (Simple Neural Attentive Meta-Learner)
+
+```bash
+python train_snail.py \
+    --dataset TRIP \
+    --epochs 10000 \
+    --lr 0.0001 \
+    --shots 25 \
+    --shots_test 25 \
+    --cuda \
+    --exp results/SNAIL
+```
+
+**Key parameters:**
+- `--epochs`: Number of training epochs
+- `--shots`: Support samples during training
+- `--shots_test`: Support samples at test time
+- `--cuda`: Enable GPU training
+
+### Base (Individual Training)
+
+Trains a model from scratch on each test task (no meta-learning):
+
+```bash
+python train_individual.py \
+    --dataset TRIP \
+    --epochs 10 \
+    --lr 0.00001 \
+    --k_spt 25 \
+    --k_qry 25 \
+    --output results/Base
+```
+
+### Common Parameters
+
+All training scripts share these parameters:
+
+| Parameter | Description |
+|-----------|-------------|
+| `--dataset` | Dataset name or path |
+| `--k_spt` | Number of support samples per task |
+| `--k_qry` | Number of query samples per task |
+| `--repeats` | Number of experiment repetitions |
+| `--output` | Output directory for results |
+| `--load_weights` | Path to pretrained weights (optional) |
+
+### Running All Models
+
+A convenience script is provided to run all models with benchmark hyperparameters:
+
+```bash
+sbatch run_all_models.sh
+```
+
+Or run directly:
+
+```bash
+bash run_all_models.sh
+```
+
+---
