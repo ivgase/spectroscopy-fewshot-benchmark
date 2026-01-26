@@ -216,26 +216,42 @@ def test(opt, test_dataset, model):
 
 #     return avg_acc
 
+# Dataset name to path mapping
+DATASET_PATHS = {
+    "TRIP": "data/TRIP",
+    "Mango_y": "data/MangoDataset_by_year",
+    "Mango_yr": "data/MangoDataset_by_year-region",
+    "Soil_MIR": "data/SoilDataset_MIR",
+    "Soil_NIR": "data/SoilDataset_NIR",
+}
+
+def resolve_dataset_path(dataset_arg):
+    """Resolve dataset name to path. If name is in mapping, return path; otherwise assume it's already a path."""
+    return DATASET_PATHS.get(dataset_arg, dataset_arg)
+
 def main():
     '''
     Initialize everything and train
     '''
     parser = argparse.ArgumentParser()
-    parser.add_argument('--exp', type=str, default='default')
-    parser.add_argument('--epochs', type=int, default=100)
-    parser.add_argument('--iterations', type=int, default=10000)
-    parser.add_argument('--num_samples', type=int, default=1)
-    parser.add_argument('--lr', type=float, default=0.0001)
-    parser.add_argument('--batch_size', type=int, default=32)
-    parser.add_argument('--cuda', action='store_true')
-    parser.add_argument('--dataset', type=str, default='data/MixedDataset')
-    parser.add_argument('--shots', type=int, default=20)
-    parser.add_argument('--queries', type=int, default=1)
-    parser.add_argument('--shots_test', type=int, default=20)
-    parser.add_argument('--queries_test', type=int, default=1)
-    parser.add_argument('--repeats', type=int, default=1)
-    parser.add_argument('--task_batch', type=int, default=20)
+    parser.add_argument('--exp', type=str, default='default', help='output directory for results')
+    parser.add_argument('--epochs', type=int, default=100, help='number of training epochs')
+    parser.add_argument('--iterations', type=int, default=10000, help='number of training iterations (unused)')
+    parser.add_argument('--num_samples', type=int, default=1, help='number of samples per prediction')
+    parser.add_argument('--lr', type=float, default=0.0001, help='learning rate')
+    parser.add_argument('--batch_size', type=int, default=32, help='batch size for training')
+    parser.add_argument('--cuda', action='store_true', help='enable CUDA training')
+    parser.add_argument('--dataset', type=str, default='TRIP', help='dataset name (TRIP, Mango_y, Mango_yr, Soil_MIR, Soil_NIR) or path')
+    parser.add_argument('--shots', type=int, default=20, help='number of support samples per task during training')
+    parser.add_argument('--queries', type=int, default=1, help='number of query samples per task during training')
+    parser.add_argument('--shots_test', type=int, default=20, help='number of support samples per task at test time')
+    parser.add_argument('--queries_test', type=int, default=1, help='number of query samples per task at test time')
+    parser.add_argument('--repeats', type=int, default=1, help='number of experiment repetitions')
+    parser.add_argument('--task_batch', type=int, default=20, help='number of tasks per batch')
     options = parser.parse_args()
+
+    # Resolve dataset path
+    options.dataset = resolve_dataset_path(options.dataset)
 
     if not os.path.exists(options.exp):
         os.makedirs(options.exp)

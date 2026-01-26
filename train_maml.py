@@ -26,33 +26,49 @@ from datetime import datetime
 
 import argparse
 
+# Dataset name to path mapping
+DATASET_PATHS = {
+    "TRIP": "data/TRIP",
+    "Mango_y": "data/MangoDataset_by_year",
+    "Mango_yr": "data/MangoDataset_by_year-region",
+    "Soil_MIR": "data/SoilDataset_MIR",
+    "Soil_NIR": "data/SoilDataset_NIR",
+}
+
+def resolve_dataset_path(dataset_arg):
+    """Resolve dataset name to path. If name is in mapping, return path; otherwise assume it's already a path."""
+    return DATASET_PATHS.get(dataset_arg, dataset_arg)
+
 # Arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--output", type=str, default="results/default", help="results directory")
-parser.add_argument("--episodes", type=int, default=10000, help="number of episodes")
-parser.add_argument("--update_lr", type=float, default=0.01, help="update learning rate")
-parser.add_argument("--meta_lr", type=float, default=0.001, help="meta learning rate")
-parser.add_argument("--k_spt", type=int, default=25, help="k shot for support set")
-parser.add_argument("--k_qry", type=int, default=25, help="k shot for query set")
-parser.add_argument("--k_spt_test", type=int, default=None, help="k shot for support set for test")
-parser.add_argument("--k_qry_test", type=int, default=None, help="k shot for query set for test")
-parser.add_argument("--update_step", type=int, default=5, help="update steps")
-parser.add_argument("--update_step_test", type=int, default=10, help="update steps for test")
-parser.add_argument("--grad_clip", type=float, default=1.0, help="gradient clipping")
-parser.add_argument("--second_order", action="store_true", help="use second order")
-parser.add_argument("--repeats", type=int, default=1, help="number of repeats")
-parser.add_argument("--load_weights", type=str, default=None, help="load weights from a previous model. Provide the path")
-parser.add_argument("--dataset", type=str, default="data/MixedDataset", help="dataset path")
-parser.add_argument("--task_batch", type=int, default=None, help="number of task batches")
-parser.add_argument("--train_tasks", type=int, default=None, help="total number of tasks")
-parser.add_argument("--noise_aug", action="store_true", help="use noise augmentation")
-parser.add_argument("--p_awgn", type=float, default=1.0, help="probability of applying SNR noise augmentation")
-parser.add_argument("--p_drift", type=float, default=1.0, help="probability of applying scale noise augmentation")
-parser.add_argument("--p_baseline", type=float, default=1.0, help="probability of applying baseline noise augmentation")
-parser.add_argument("--savgol", action="store_true", help="use Savitzky-Golay filter")
-parser.add_argument("--savgol_noise", action="store_true", help="use Savitzky-Golay filter after noise augmentation")
-parser.add_argument("--adapt_clean", action="store_true", help="adapt clean data to noise augmentation")
+parser.add_argument("--output", type=str, default="results/default", help="output directory for results")
+parser.add_argument("--episodes", type=int, default=10000, help="number of meta-training episodes")
+parser.add_argument("--update_lr", type=float, default=0.01, help="inner loop learning rate (task adaptation)")
+parser.add_argument("--meta_lr", type=float, default=0.001, help="outer loop learning rate (meta-optimization)")
+parser.add_argument("--k_spt", type=int, default=25, help="number of support samples per task")
+parser.add_argument("--k_qry", type=int, default=25, help="number of query samples per task")
+parser.add_argument("--k_spt_test", type=int, default=None, help="number of support samples per task at test time (defaults to k_spt)")
+parser.add_argument("--k_qry_test", type=int, default=None, help="number of query samples per task at test time (defaults to k_qry)")
+parser.add_argument("--update_step", type=int, default=5, help="number of inner loop gradient steps during training")
+parser.add_argument("--update_step_test", type=int, default=10, help="number of inner loop gradient steps at test time")
+parser.add_argument("--grad_clip", type=float, default=1.0, help="gradient clipping value")
+parser.add_argument("--second_order", action="store_true", help="use second-order gradients (full MAML)")
+parser.add_argument("--repeats", type=int, default=1, help="number of experiment repetitions")
+parser.add_argument("--load_weights", type=str, default=None, help="path to pretrained model weights")
+parser.add_argument("--dataset", type=str, default="TRIP", help="dataset name (TRIP, Mango_y, Mango_yr, Soil_MIR, Soil_NIR) or path")
+parser.add_argument("--task_batch", type=int, default=None, help="number of tasks per meta-batch")
+parser.add_argument("--train_tasks", type=int, default=None, help="maximum number of training tasks to use")
+parser.add_argument("--noise_aug", action="store_true", help="enable noise augmentation")
+parser.add_argument("--p_awgn", type=float, default=1.0, help="probability of applying additive white Gaussian noise")
+parser.add_argument("--p_drift", type=float, default=1.0, help="probability of applying multiplicative drift noise")
+parser.add_argument("--p_baseline", type=float, default=1.0, help="probability of applying baseline shift noise")
+parser.add_argument("--savgol", action="store_true", help="apply Savitzky-Golay filter during preprocessing")
+parser.add_argument("--savgol_noise", action="store_true", help="apply Savitzky-Golay filter after noise augmentation")
+parser.add_argument("--adapt_clean", action="store_true", help="use clean (non-augmented) data for test-time adaptation")
 args = parser.parse_args()
+
+# Resolve dataset path
+args.dataset = resolve_dataset_path(args.dataset)
 
 episodes = args.episodes
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

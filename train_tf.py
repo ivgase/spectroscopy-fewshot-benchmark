@@ -23,20 +23,36 @@ from datetime import datetime
 
 import argparse
 
+# Dataset name to path mapping
+DATASET_PATHS = {
+    "TRIP": "data/TRIP",
+    "Mango_y": "data/MangoDataset_by_year",
+    "Mango_yr": "data/MangoDataset_by_year-region",
+    "Soil_MIR": "data/SoilDataset_MIR",
+    "Soil_NIR": "data/SoilDataset_NIR",
+}
+
+def resolve_dataset_path(dataset_arg):
+    """Resolve dataset name to path. If name is in mapping, return path; otherwise assume it's already a path."""
+    return DATASET_PATHS.get(dataset_arg, dataset_arg)
+
 # Arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--output", type=str, default="results/default/", help="results directory")
-parser.add_argument("--epochs", type=int, default=10000, help="number of episodes")
-parser.add_argument("--epochs_adapt", type=int, default=10, help="number of epochs for inner loop")
-parser.add_argument("--lr", type=float, default=0.01, help="learning rate")
-parser.add_argument("--lr_adapt", type=float, default=0.01, help="learning rate for inner loop")
-parser.add_argument("--k_spt", type=int, default=25, help="k shot for support set")
-parser.add_argument("--k_qry", type=int, default=25, help="k shot for query set")
-parser.add_argument("--grad_clip", type=float, default=1.0, help="gradient clipping")
-parser.add_argument("--repeats", type=int, default=1, help="number of repeats")
-parser.add_argument("--load_weights", type=str, default=None, help="load weights from a previous model. Provide the path")
-parser.add_argument("--dataset", type=str, default="data/MixedDataset", help="path to dataset")
+parser.add_argument("--output", type=str, default="results/default/", help="output directory for results")
+parser.add_argument("--epochs", type=int, default=10000, help="number of training epochs")
+parser.add_argument("--epochs_adapt", type=int, default=10, help="number of epochs for test-time adaptation")
+parser.add_argument("--lr", type=float, default=0.01, help="learning rate for training")
+parser.add_argument("--lr_adapt", type=float, default=0.01, help="learning rate for test-time adaptation")
+parser.add_argument("--k_spt", type=int, default=25, help="number of support samples per task")
+parser.add_argument("--k_qry", type=int, default=25, help="number of query samples per task")
+parser.add_argument("--grad_clip", type=float, default=1.0, help="gradient clipping value")
+parser.add_argument("--repeats", type=int, default=1, help="number of experiment repetitions")
+parser.add_argument("--load_weights", type=str, default=None, help="path to pretrained model weights")
+parser.add_argument("--dataset", type=str, default="TRIP", help="dataset name (TRIP, Mango_y, Mango_yr, Soil_MIR, Soil_NIR) or path")
 args = parser.parse_args()
+
+# Resolve dataset path
+args.dataset = resolve_dataset_path(args.dataset)
 
 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 logdir = os.path.join("logs", args.output.replace("results/", "")+"_"+timestamp)

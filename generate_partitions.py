@@ -44,14 +44,14 @@ DATA_BASE = BASE_DIR / "data_base"
 OUTPUT_DIR = BASE_DIR / "data"
 
 # Index directories (input)
-MIXED_DATASET_INDICES = DATA_BASE / "MixedDataset"
+TRIP_INDICES = DATA_BASE / "TRIP"
 SOIL_NIR_INDICES = DATA_BASE / "SoilDataset_NIR"
 SOIL_MIR_INDICES = DATA_BASE / "SoilDataset_MIR"
 MANGO_BY_YEAR_INDICES = DATA_BASE / "MangoDataset_by_year"
 MANGO_BY_YEAR_REGION_INDICES = DATA_BASE / "MangoDataset_by_year-region"
 
 # Output directories
-OUTPUT_MIXED = OUTPUT_DIR / "MixedDataset"
+OUTPUT_TRIP = OUTPUT_DIR / "TRIP"
 OUTPUT_SOIL_NIR = OUTPUT_DIR / "SoilDataset_NIR"
 OUTPUT_SOIL_MIR = OUTPUT_DIR / "SoilDataset_MIR"
 OUTPUT_MANGO_BY_YEAR = OUTPUT_DIR / "MangoDataset_by_year"
@@ -83,7 +83,7 @@ def process_diesel(verbose=False):
         print(f"Data loaded: X={diesel_x.shape}, y={diesel_y.shape}")
     
     # Process each task
-    tasks = [d for d in os.listdir(MIXED_DATASET_INDICES) if d.startswith('Diesel_')]
+    tasks = [d for d in os.listdir(TRIP_INDICES) if d.startswith('Diesel_')]
     print(f"Found {len(tasks)} Diesel tasks")
     
     for task in tasks:
@@ -91,7 +91,7 @@ def process_diesel(verbose=False):
             print(f"\n  Processing: {task}")
         
         # Read indices
-        df_indices = pd.read_csv(MIXED_DATASET_INDICES / task / "split.csv", index_col=0)
+        df_indices = pd.read_csv(TRIP_INDICES / task / "split.csv", index_col=0)
         
         # Get support/query indices
         supp_idx = df_indices.query("set == 'support'").index.tolist()
@@ -107,7 +107,7 @@ def process_diesel(verbose=False):
         y_query = pd.DataFrame(diesel_y.loc[query_idx][property_name])
         
         # Save
-        output_path = OUTPUT_MIXED / task
+        output_path = OUTPUT_TRIP / task
         output_path.mkdir(parents=True, exist_ok=True)
         
         X_supp.to_csv(output_path / 'X_supp.csv')
@@ -139,7 +139,7 @@ def process_corn(verbose=False):
         print(f"Available properties: {labels}")
     
     # Process each task
-    tasks = [d for d in os.listdir(MIXED_DATASET_INDICES) if d.startswith('Corn_')]
+    tasks = [d for d in os.listdir(TRIP_INDICES) if d.startswith('Corn_')]
     print(f"Found {len(tasks)} Corn tasks")
     
     for task in tasks:
@@ -147,7 +147,7 @@ def process_corn(verbose=False):
             print(f"\n  Processing: {task}")
         
         # Read indices
-        df_indices = pd.read_csv(MIXED_DATASET_INDICES / task / "split.csv", index_col=0)
+        df_indices = pd.read_csv(TRIP_INDICES / task / "split.csv", index_col=0)
         
         # Get property name
         property_name = task.split('_')[1]#.strip()
@@ -177,7 +177,7 @@ def process_corn(verbose=False):
         y_query = pd.concat(ys_query, axis=0).reset_index(drop=True)
         
         # Save
-        output_path = OUTPUT_MIXED / task
+        output_path = OUTPUT_TRIP / task
         output_path.mkdir(parents=True, exist_ok=True)
         
         X_support.to_csv(output_path / 'X_supp.csv')
@@ -204,7 +204,7 @@ def process_melamine(verbose=False):
     wl2 = [1/wn*1e7 for wn in data['wn2']]
     
     # Process each task
-    tasks = [d for d in os.listdir(MIXED_DATASET_INDICES) if d.startswith('Melamine_')]
+    tasks = [d for d in os.listdir(TRIP_INDICES) if d.startswith('Melamine_')]
     print(f"Found {len(tasks)} Melamine tasks")
     
     for task in tasks:
@@ -212,7 +212,7 @@ def process_melamine(verbose=False):
             print(f"\n  Processing: {task}")
         
         # Read indices
-        df_indices = pd.read_csv(MIXED_DATASET_INDICES / task / "split.csv", index_col=0)
+        df_indices = pd.read_csv(TRIP_INDICES / task / "split.csv", index_col=0)
         
         # Get recipe
         recipe = task.split('_')[1]
@@ -236,7 +236,7 @@ def process_melamine(verbose=False):
         y_query = y.loc[query_idx]
         
         # Save
-        output_path = OUTPUT_MIXED / task
+        output_path = OUTPUT_TRIP / task
         output_path.mkdir(parents=True, exist_ok=True)
         
         X_supp.to_csv(output_path / 'X_supp.csv')
@@ -274,7 +274,7 @@ def process_eggs(verbose=False):
         print(f"\n  Processing: {task}")
     
     # Read indices
-    df_indices = pd.read_csv(MIXED_DATASET_INDICES / task / "split.csv", index_col=0)
+    df_indices = pd.read_csv(TRIP_INDICES / task / "split.csv", index_col=0)
     
     # Extract support/query
     supp_idx = df_indices.query("set == 'support'").index.tolist()
@@ -286,7 +286,7 @@ def process_eggs(verbose=False):
     y_query = y.loc[query_idx]
     
     # Save
-    output_path = OUTPUT_MIXED / task
+    output_path = OUTPUT_TRIP / task
     output_path.mkdir(parents=True, exist_ok=True)
     
     x_supp.to_csv(output_path / 'X_supp.csv')
@@ -608,7 +608,7 @@ def process_cgl(verbose=False):
         X_query = X_test.loc[not_na_index]
         
         # Save
-        output_path = OUTPUT_MIXED / task
+        output_path = OUTPUT_TRIP / task
         output_path.mkdir(parents=True, exist_ok=True)
         
         X_supp.to_csv(output_path / 'X_supp.csv')
@@ -693,7 +693,7 @@ def process_shootout(verbose=False):
         X_query = query.drop(columns=['sample', 'particion'])
         
         # Save
-        output_path = OUTPUT_MIXED / task
+        output_path = OUTPUT_TRIP / task
         output_path.mkdir(parents=True, exist_ok=True)
         
         X_supp.to_csv(output_path / 'X_supp.csv')
@@ -744,7 +744,7 @@ def process_wheat(verbose=False):
         print(f"  Test: X={testX.shape}, y={testY.shape}")
     
     # Save
-    output_path = OUTPUT_MIXED / 'Wheat'
+    output_path = OUTPUT_TRIP / 'Wheat'
     output_path.mkdir(parents=True, exist_ok=True)
     
     calX.to_csv(output_path / 'X_supp.csv')
