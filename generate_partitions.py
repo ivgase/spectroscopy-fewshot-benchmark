@@ -783,6 +783,11 @@ def main():
         action='store_true',
         help='Show detailed processing information'
     )
+    parser.add_argument(
+        '--cleanup',
+        action='store_true',
+        help='Delete data_tmp/ directory after successful processing'
+    )
     
     args = parser.parse_args()
     
@@ -838,16 +843,16 @@ def main():
         if args.dataset == 'all' or args.dataset == 'wheat':
             process_wheat(args.verbose)
         
-        # Copy main splits.csv for MixedDataset
-        # This file is at the root level of MixedDataset, not inside task subdirectories
+        # Copy main splits.csv for TRIP dataset
+        # This file is at the root level of TRIP, not inside task subdirectories
         if args.dataset == 'all' or args.dataset in ['diesel', 'corn', 'melamine', 'eggs', 'cgl', 'shootout', 'wheat']:
             import shutil
-            mixed_splits = MIXED_DATASET_INDICES / 'splits.csv'
-            if mixed_splits.exists():
-                OUTPUT_MIXED.mkdir(parents=True, exist_ok=True)
-                shutil.copy(mixed_splits, OUTPUT_MIXED / 'splits.csv')
+            trip_splits = TRIP_INDICES / 'splits.csv'
+            if trip_splits.exists():
+                OUTPUT_TRIP.mkdir(parents=True, exist_ok=True)
+                shutil.copy(trip_splits, OUTPUT_TRIP / 'splits.csv')
                 if args.verbose:
-                    print(f"\n✓ Copied main splits.csv to MixedDataset/")
+                    print(f"\n✓ Copied main splits.csv to TRIP/")
         
     except Exception as e:
         print(f"\n✗ ERROR: {e}")
@@ -860,6 +865,14 @@ def main():
     print("="*80)
     print("\n✓ All datasets processed successfully")
     print(f"\nGenerated files in: {OUTPUT_DIR}")
+    
+    # Cleanup data_tmp/ if requested
+    if args.cleanup:
+        import shutil
+        if DATA_ORIG.exists():
+            print(f"\n🧹 Cleaning up temporary data...")
+            shutil.rmtree(DATA_ORIG)
+            print(f"✓ Deleted {DATA_ORIG}")
     
     return 0
 
