@@ -99,7 +99,7 @@ def get_spectral_columns(df, spectral_type='visnir'):
                 filtered_cols.append(col)
         spectral_cols = filtered_cols
     
-    return sorted(spectral_cols)
+    return sorted(spectral_cols, key=lambda c: int(c.split('.')[1].split('_')[0]))
 
 
 def apply_column_mapping(df_orig, indices, column_mapping):
