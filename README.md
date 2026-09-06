@@ -15,7 +15,7 @@ python fetch_data.py
 
 This script will automatically download the following datasets:
 - **Mango**: Mango quality prediction data
-- **Melamine**: Melamine adulteration dataset
+- **Melamine**: Melamine-formaldehyde resin dataset
 - **Corn**: Corn properties (moisture, oil, protein, starch)
 - **Diesel**: Diesel properties (BP50, CN, density, flash point, freeze point, total content, viscosity)
 - **Eggs**: Eggs dataset
@@ -24,7 +24,51 @@ This script will automatically download the following datasets:
 - **NIR Shootout 2002**: NIR Shootout 2002 dataset
 - **OSSL**: Open Soil Spectral Library (MIR and NIR soil data)
 
-Files will be saved in the `data_tmp/` directory. Some compressed files (.zip, .gz) are automatically decompressed.
+Files will be saved in the `data_tmp/` directory. Some compressed files (.zip, .gz) are automatically decompressed. Failed or incomplete downloads do not replace existing destination files.
+
+### Download and prepare only openly licensed sources
+
+Run these commands from the repository root:
+
+```bash
+# Preview selection, licenses and source URLs without downloading or writing files
+python fetch_data.py --open-only --dry-run
+
+python fetch_data.py --open-only
+python transform_soil_data.py
+python generate_partitions.py --open-only
+```
+
+This includes **Mango, Melamine, Eggs, Wheat Kernel and OSSL** and excludes
+**Diesel, Corn, CGL and NIR Shootout**. “Open” means a reviewed open license
+allowing commercial reuse subject to its conditions, including attribution;
+it does not mean license-free. See [dataset licenses and source evidence](DATA_LICENSES.md).
+
+Raw files still go to `data_tmp/`. Existing raw files are not removed by the
+filter. Partition generation applies the same selection even when excluded raw
+files are present. OSSL transformation uses L0; both original OSSL downloads are
+retained for compatibility.
+
+Open-only partitions default to `data_open/`, and TRIP's `splits.csv` contains only
+selected tasks with their original split assignments. The output directory must
+be empty to prevent mixing previous tasks; choose a new directory for a rerun:
+
+```bash
+python generate_partitions.py --open-only --output-dir data_open_run2
+# A single eligible dataset can also be prepared in a fresh directory
+python generate_partitions.py --open-only --dataset eggs --output-dir data_open_eggs
+# Training accepts the generated dataset path
+python train_protonet.py --dataset data_open/TRIP
+```
+
+An excluded `--dataset` combined with `--open-only` is an error. `--cleanup` is
+available only for a complete, unfiltered run, since the shared raw directory
+may contain unprocessed datasets. Missing required input files cause a nonzero
+exit status. The filtered dataset is a **reduced benchmark**, not a reproduction
+of the complete benchmark's results or sample counts.
+
+Without `--open-only`, the scripts continue to select all sources and generate
+partitions in `data/` by default.
 
 ### 2. Transform soil data
 
@@ -52,6 +96,8 @@ python generate_partitions.py
 This script:
 - Reads the predefined partition indices from `data_base/`
 - Processes all downloaded datasets
+- Generates only tasks listed in each benchmark `splits.csv` (185 Soil NIR and
+  704 Soil MIR tasks); discarded candidate index directories are ignored
 - Generates the final partitions in the `data/` directory
 - Creates for each task the following files:
   - `X_supp.csv`: Support spectra
@@ -65,7 +111,7 @@ Optionally, you can process only a specific dataset:
 python generate_partitions.py --dataset soil_mir --verbose
 ```
 
-Available datasets: `diesel`, `corn`, `melamine`, `eggs`, `soil_nir`, `soil_mir`, `mango`, `cgl`, `shootout`, `wheat`, `raman`.
+Available datasets: `diesel`, `corn`, `melamine`, `eggs`, `soil_nir`, `soil_mir`, `mango`, `cgl`, `shootout`, `wheat`.
 
 ---
 
@@ -204,3 +250,14 @@ bash run_all_models.sh
 ```
 
 ---
+
+## Offline checks
+
+With `pandas`, `numpy`, `scipy`, `requests`, `tqdm` and `openpyxl` installed:
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Tests mock network responses and use temporary synthetic inputs; no full dataset
+download is required.

@@ -6,8 +6,8 @@ Script to generate partition files (X_supp.csv, X_query.csv, y_supp.csv, y_query
 for all datasets from existing index files (split.csv).
 
 This script should be run after:
-1. data/fetch_data.py - to download original data
-2. data/transform_ossl_data.py - to generate clean soil datasets
+1. fetch_data.py - to download original data
+2. transform_soil_data.py - to generate clean soil datasets
 
 Dependencies:
 - pandas
@@ -32,6 +32,7 @@ import os
 import sys
 import argparse
 from pathlib import Path
+from dataset_catalog import select_partitions, TRIP_PREFIXES
 
 
 # ============================================================================
@@ -332,8 +333,18 @@ def process_soil_dataset(dataset_type, indices_dir, output_dir, soil_data_path, 
                      and col not in ['index', 'Country', 'Continent', 'State', 
                                      'longitude.point_wgs84_dd', 'latitude.point_wgs84_dd']]
     
-    # Process each task
-    tasks = [d for d in os.listdir(indices_dir) if (indices_dir / d).is_dir()]
+    # Only generate tasks that belong to the published benchmark split. Some
+    # index directories can contain candidates discarded before the final
+    # train/validation/test assignment (currently six three-sample Malta tasks).
+    splits_file = indices_dir / 'splits.csv'
+    if splits_file.exists():
+        splits = pd.read_csv(splits_file, index_col=0)
+        tasks = splits['task'].drop_duplicates().tolist()
+        missing = [task for task in tasks if not (indices_dir / task).is_dir()]
+        if missing:
+            raise FileNotFoundError(f"Indexed task directories not found: {missing}")
+    else:
+        tasks = [d for d in os.listdir(indices_dir) if (indices_dir / d).is_dir()]
     
     for task in tasks:
         split_file = indices_dir / task / "split.csv"
@@ -395,7 +406,6 @@ def process_soil_dataset(dataset_type, indices_dir, output_dir, soil_data_path, 
             print(f"      y_supp: {y_supp.shape}, y_query: {y_query.shape}")
     
     # Copy splits.csv file if it exists
-    splits_file = indices_dir / 'splits.csv'
     if splits_file.exists():
         import shutil
         shutil.copy(splits_file, output_dir / 'splits.csv')
@@ -409,12 +419,10 @@ def process_soil_nir(verbose=False):
     print("PROCESSING DATASET: SOIL NIR")
     print("="*80)
     
-    soil_nir_path = BASE_DIR / "data_tmp" / "soil_data_transformed_nir.csv"
+    soil_nir_path = DATA_ORIG / "soil_data_transformed_nir.csv"
     
     if not soil_nir_path.exists():
-        print(f"⚠ Warning: {soil_nir_path} not found")
-        print("  Run first: python transform_soil_data.py")
-        return
+        raise FileNotFoundError(f"{soil_nir_path} not found; run python transform_soil_data.py")
     
     # Process NIR mixed
     process_soil_dataset('NIR', SOIL_NIR_INDICES, OUTPUT_SOIL_NIR, 
@@ -427,12 +435,10 @@ def process_soil_mir(verbose=False):
     print("PROCESSING DATASET: SOIL MIR")
     print("="*80)
     
-    soil_mir_path = BASE_DIR / "data_tmp" / "soil_data_transformed_mir.csv"
+    soil_mir_path = DATA_ORIG / "soil_data_transformed_mir.csv"
     
     if not soil_mir_path.exists():
-        print(f"⚠ Warning: {soil_mir_path} not found")
-        print("  Run first: python transform_soil_data.py")
-        return
+        raise FileNotFoundError(f"{soil_mir_path} not found; run python transform_soil_data.py")
     
     # Process MIR mixed
     process_soil_dataset('MIR', SOIL_MIR_INDICES, OUTPUT_SOIL_MIR, 
@@ -727,9 +733,7 @@ def process_wheat(verbose=False):
     filename = DATA_ORIG / 'wheat_kernel.xlsx'
     
     if not filename.exists() or filename.stat().st_size == 0:
-        print(f"⚠ Warning: {filename} not found or empty")
-        print("  Skipping Wheat dataset")
-        return
+        raise FileNotFoundError(f"{filename} not found or empty")
     
     calX = pd.read_excel(filename, sheet_name='calibration_X', header=None, engine='openpyxl')
     calY = pd.read_excel(filename, sheet_name='calibration_Y', header=None, engine='openpyxl')
@@ -764,7 +768,36 @@ def process_wheat(verbose=False):
 # MAIN FUNCTION
 # ============================================================================
 
-def main():
+def configure_output(output_dir):
+    global OUTPUT_DIR, OUTPUT_TRIP, OUTPUT_SOIL_NIR, OUTPUT_SOIL_MIR
+    global OUTPUT_MANGO_BY_YEAR, OUTPUT_MANGO_BY_YEAR_REGION
+    OUTPUT_DIR = output_dir
+    OUTPUT_TRIP = output_dir / "TRIP"
+    OUTPUT_SOIL_NIR = output_dir / "SoilDataset_NIR"
+    OUTPUT_SOIL_MIR = output_dir / "SoilDataset_MIR"
+    OUTPUT_MANGO_BY_YEAR = output_dir / "MangoDataset_by_year"
+    OUTPUT_MANGO_BY_YEAR_REGION = output_dir / "MangoDataset_by_year-region"
+
+
+def write_trip_splits(selected):
+    """Publish only selected tasks, preserving original split assignments."""
+    prefixes = tuple(TRIP_PREFIXES[name] for name in selected if name in TRIP_PREFIXES)
+    if not prefixes:
+        return
+    splits = pd.read_csv(TRIP_INDICES / 'splits.csv', index_col=0)
+    splits = splits[splits['task'].str.startswith(prefixes)]
+    # Some original directory names have trailing spaces (e.g. Corn_Oil).
+    directories = {p.name.strip(): p for p in OUTPUT_TRIP.iterdir() if p.is_dir()} if OUTPUT_TRIP.exists() else {}
+    for task in splits['task']:
+        directory = directories.get(task)
+        if directory is None or any(not (directory / name).is_file() for name in
+                                   ('X_supp.csv', 'y_supp.csv', 'X_query.csv', 'y_query.csv')):
+            raise FileNotFoundError(f"Incomplete generated task: {task}")
+    OUTPUT_TRIP.mkdir(parents=True, exist_ok=True)
+    splits.to_csv(OUTPUT_TRIP / 'splits.csv')
+
+
+def main(argv=None):
     """Main function."""
     
     parser = argparse.ArgumentParser(
@@ -789,7 +822,27 @@ def main():
         help='Delete data_tmp/ directory after successful processing'
     )
     
-    args = parser.parse_args()
+    parser.add_argument('--open-only', action='store_true',
+                        help='Process only datasets with reviewed open reuse licenses')
+    parser.add_argument('--output-dir', type=Path,
+                        help='Output directory (default: data_open for --open-only, otherwise data)')
+    args = parser.parse_args(argv)
+    try:
+        selected = select_partitions(args.dataset, args.open_only)
+    except ValueError as exc:
+        parser.error(str(exc))
+    if args.cleanup and (args.open_only or args.dataset != 'all'):
+        parser.error('--cleanup requires a full run; data_tmp may contain unprocessed datasets')
+    output = args.output_dir or BASE_DIR / ('data_open' if args.open_only else 'data')
+    output = output.resolve()
+    # Reject overlapping input/output roots before any processor can write.
+    for source in (DATA_ORIG.resolve(), DATA_BASE.resolve()):
+        if output == source or output in source.parents or source in output.parents:
+            parser.error('Output directory must not overlap data_tmp or data_base')
+    if args.open_only and output.exists() and (not output.is_dir() or any(output.iterdir())):
+        parser.error('--open-only requires an empty output directory to avoid mixing previous tasks')
+    configure_output(output)
+    print('Selected datasets: ' + ', '.join(selected))
     
     print("\n" + "="*80)
     print("DATASET PARTITIONS GENERATION")
@@ -802,7 +855,7 @@ def main():
     # Verify that the original data directory exists
     if not DATA_ORIG.exists():
         print(f"\n✗ ERROR: Data directory not found: {DATA_ORIG}")
-        print("\nRun first: python data/fetch_data.py")
+        print("\nRun first: python fetch_data.py")
         return 1
     
     # Verify that the index directory exists
@@ -813,47 +866,16 @@ def main():
     
     # Process datasets according to selected option
     try:
-        if args.dataset == 'all' or args.dataset == 'diesel':
-            process_diesel(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'corn':
-            process_corn(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'melamine':
-            process_melamine(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'eggs':
-            process_eggs(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'soil_nir':
-            process_soil_nir(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'soil_mir':
-            process_soil_mir(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'mango':
-            process_mango(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'cgl':
-            process_cgl(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'shootout':
-            process_shootout(args.verbose)
-        
-        if args.dataset == 'all' or args.dataset == 'wheat':
-            process_wheat(args.verbose)
-        
-        # Copy main splits.csv for TRIP dataset
-        # This file is at the root level of TRIP, not inside task subdirectories
-        if args.dataset == 'all' or args.dataset in ['diesel', 'corn', 'melamine', 'eggs', 'cgl', 'shootout', 'wheat']:
-            import shutil
-            trip_splits = TRIP_INDICES / 'splits.csv'
-            if trip_splits.exists():
-                OUTPUT_TRIP.mkdir(parents=True, exist_ok=True)
-                shutil.copy(trip_splits, OUTPUT_TRIP / 'splits.csv')
-                if args.verbose:
-                    print(f"\n✓ Copied main splits.csv to TRIP/")
-        
+        processors = {
+            'diesel': process_diesel, 'corn': process_corn, 'melamine': process_melamine,
+            'eggs': process_eggs, 'soil_nir': process_soil_nir, 'soil_mir': process_soil_mir,
+            'mango': process_mango, 'cgl': process_cgl, 'shootout': process_shootout,
+            'wheat': process_wheat,
+        }
+        for name in selected:
+            processors[name](args.verbose)
+        write_trip_splits(selected)
+
     except Exception as e:
         print(f"\n✗ ERROR: {e}")
         import traceback
@@ -878,4 +900,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

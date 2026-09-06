@@ -209,3 +209,5 @@ __marimo__/
 data_tmp/
 data/
 .vscode/
+# Open-only generated partitions (including named reruns)
+data_open*/
